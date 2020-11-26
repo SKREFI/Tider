@@ -1,0 +1,18 @@
+﻿@model IEnumerable<Tider.Models.Category>
+
+@{
+    ViewBag.Title = "Categories";
+}
+
+@foreach (var item in Model)
+{
+    @Html.Partial("Partials/_Article", item)
+}
+
+<div onclick="redirect()" class="floatingButton">
+    <p>Add Category</p>
+</div>
+
+<script>
+    function redirect() { window.location = "/Categories/Create" }
+</script>

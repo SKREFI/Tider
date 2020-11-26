@@ -1,0 +1,30 @@
+﻿@model Tider.Models.Category
+
+<div class="article">
+    <img id="category-image" src="@Model.Image_url"/>
+
+    <div class="box">
+        <div class="title-sb">
+            <h2>@Model.Title</h2>
+        </div>
+        <div class="desc-sb">
+            @Model.Description
+        </div>
+        <div class="badges-sb">
+            <div>
+                <span class="badge badge-dark"><img src="~/Content/src/clock.svg" />@Model.Date</span>
+                <span class="badge badge-dark"><img src="~/Content/src/person.svg"/>@Model.Op.Nickname</span>
+                <span class="badge badge-info">@Html.ActionLink("Subscribe!", "Subscribe", new { })</span>
+                <span class="badge badge-success">2 subscribers</span>
+                <span class="badge badge-success">1.2k views / 24h</span>
+            </div>
+
+            <div>
+                <span class="badge badge-warning"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID })</span>
+                <span class="badge badge-info">@Html.ActionLink("Details", "Details", new { id = Model.ID })</span>
+                <span class="badge badge-danger">@Html.ActionLink("Delete", "Delete", new { id = Model.ID })</span>
+            </div>
+        </div>
+    </div>
+
+</div>
