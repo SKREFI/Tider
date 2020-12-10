@@ -30,29 +30,10 @@ namespace Tider.Controllers
             return View(posts.ToList());
         }
 
-        // GET: Posts/Details/5
-        public ActionResult Details(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null) {
-                return HttpNotFound();
-            }
-            return View(post);
-        }
-
-        // GET: Posts/Create
-        public ActionResult Create() {
-            //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Title");
-            //ViewBag.OpId = new SelectList(db.ApplicationUsers, "Id", "Nickname");
-            return View();
-        }
-
         // POST: Posts/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Title,Content,Image_url")] Post post) {
+        public ActionResult Create([Bind(Include = "ID,Content,Image_url")] Post post) {
             post.OpId = User.Identity.GetUserId();
             post.Date = DateTime.Now;
 
@@ -72,43 +53,25 @@ namespace Tider.Controllers
             return View(post);
         }
 
-        // GET: Posts/Edit/5
-        public ActionResult Edit(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null) {
-                return HttpNotFound();
-            }
-            //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Title", post.CategoryId);
-            //ViewBag.OpId = new SelectList(db.ApplicationUsers, "Id", "Nickname", post.OpId);
-            return View(post);
-        }
-
         // POST: Posts/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Content,Image_url,Date,CategoryId,OpId")] Post post) {
+        public ActionResult Edit([Bind(Include = "ID,Content,Image_url")] Post post) {
+            post.Date = DateTime.Now;
+            post.OpId = User.Identity.GetUserId();
+            
+            // TODO: Ask, why is post.CategoryId lost?????
+
+            if (TempData.ContainsKey("categoryId")) {
+                post.CategoryId = (int)TempData["categoryId"];
+            } else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             if (ModelState.IsValid) {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect("/Posts/Index/?categoryId=" + post.CategoryId);
             }
-            //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Title", post.CategoryId);
-            //ViewBag.OpId = new SelectList(db.ApplicationUsers, "Id", "Nickname", post.OpId);
-            return View(post);
-        }
 
-        // GET: Posts/Delete/5
-        public ActionResult Delete(int? id) {
-            if (id == null) {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Post post = db.Posts.Find(id);
-            if (post == null) {
-                return HttpNotFound();
-            }
             return View(post);
         }
 
@@ -119,7 +82,13 @@ namespace Tider.Controllers
             Post post = db.Posts.Find(id);
             db.Posts.Remove(post);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            int categoryId;
+            if (TempData.ContainsKey("categoryId")) {
+                categoryId = (int) TempData["categoryId"];
+            } else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return Redirect("/Posts/Index/?categoryId=" + categoryId);
         }
 
         protected override void Dispose(bool disposing) {

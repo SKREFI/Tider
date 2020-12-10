@@ -400,10 +400,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Shared\Partials\_Category.cshtml" />
-    <Content Include="Views\Posts\Create.cshtml" />
-    <Content Include="Views\Posts\Delete.cshtml" />
-    <Content Include="Views\Posts\Details.cshtml" />
-    <Content Include="Views\Posts\Edit.cshtml" />
     <Content Include="Views\Posts\Index.cshtml" />
     <Content Include="Views\Shared\Partials\_Post.cshtml" />
   </ItemGroup>
