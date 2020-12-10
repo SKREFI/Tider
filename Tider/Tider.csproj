@@ -229,6 +229,7 @@
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -242,6 +243,11 @@
   <ItemGroup>
     <Content Include="Content\bootstrap-cyborg.css" />
     <Content Include="Content\bootstrap-lumen.css" />
+    <Content Include="Content\src\my_dislike_v2.svg" />
+    <Content Include="Content\src\my_dislike_v3.png" />
+    <Content Include="Content\src\my_like.svg" />
+    <Content Include="Content\src\my_like_v2.svg" />
+    <Content Include="Content\src\my_like_v3.png" />
     <Content Include="Content\src\plus_sign.svg" />
     <Content Include="Content\src\clock.svg" />
     <Content Include="Content\src\person.svg" />
@@ -392,12 +398,14 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Categories\Create.cshtml" />
-    <Content Include="Views\Categories\Delete.cshtml" />
-    <Content Include="Views\Categories\Details.cshtml" />
-    <Content Include="Views\Categories\Edit.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
-    <Content Include="Views\Shared\Partials\_Article.cshtml" />
+    <Content Include="Views\Shared\Partials\_Category.cshtml" />
+    <Content Include="Views\Posts\Create.cshtml" />
+    <Content Include="Views\Posts\Delete.cshtml" />
+    <Content Include="Views\Posts\Details.cshtml" />
+    <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Posts\Index.cshtml" />
+    <Content Include="Views\Shared\Partials\_Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

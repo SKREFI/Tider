@@ -14,21 +14,26 @@ namespace Tider.Models
         public string Description { get; set; }
         public string Image_url { get; set; }
         public DateTime Date { get; set; }
-        public string OpId { get; set; }           // Linked1
-        public virtual ApplicationUser Op { get; set; }     // Linked1
+        public string OpId { get; set; }                     // LINKED - Op
+        public virtual ApplicationUser Op { get; set; }      // LINKED - Op
         public virtual ICollection<Post> Posts { get; set; }
+
+        //public virtual ICollection<ApplicationUser> Subscribers { get; set; }
     }
+
+
     public class Post {
         public int ID { get; set; }
-        public string Title { get; set; }
         public string Content { get; set; }
         public string Image_url { get; set; }
         public DateTime Date { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual ApplicationUser OP { get; set; }
+        public int CategoryId { get; set; }          // LINKED - Category
+        public virtual Category Category { get; set; }  // LINKED - Category
+        public string OpId { get; set; }                // LINKED - Op
+        public virtual ApplicationUser Op { get; set; } // LINKED - Op
     }
 
-    
+
 
 
     //public class Comment

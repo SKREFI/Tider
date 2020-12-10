@@ -140,3 +140,4 @@ C:\Users\SKREFI\source\repos\Tider\Tider\bin\System.Numerics.Vectors.xml
 C:\Users\SKREFI\source\repos\Tider\Tider\bin\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\SKREFI\source\repos\Tider\Tider\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\SKREFI\source\repos\Tider\Tider\bin\System.ValueTuple.xml
+C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.csprojAssemblyReference.cache

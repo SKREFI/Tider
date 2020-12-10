@@ -16,44 +16,31 @@ namespace Tider.Controllers
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Articles
-        public ActionResult Index()
-        {
+        // GET: Categories
+        public ActionResult Index() {
             return View(db.Categories.ToList());
         }
 
-        // GET: Articles/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
+        // GET: Categories/Posts/5
+        public ActionResult Posts(int? id) {
+            if (id == null) {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Category category = db.Categories.Find(id);
-            if (category == null)
-            {
+            if (category == null) {
                 return HttpNotFound();
             }
             return View(category);
         }
 
-        // GET: Articles/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Articles/Create
+        // POST: Categories/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Title,Description,Image_url")] Category category)
         {
-            //category.OP = userDb.Users.FirstOrDefault(u => u.Id == userId);
-
             category.OpId = User.Identity.GetUserId();
             category.Date = DateTime.Now;
-
 
             if (ModelState.IsValid)
             {
@@ -65,27 +52,17 @@ namespace Tider.Controllers
             return View(category);
         }
 
-        // GET: Articles/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Articles/Edit/5
+        // POST: Categories/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,Op_id,Image_url,Date,BreakIt")] Category category)
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,Image_url")] Category category)
         {
+            category.OpId = User.Identity.GetUserId();
+            category.Date = DateTime.Now;
+
+            //TODO: Ask for help, after editing, the image went puf
+
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;
@@ -95,22 +72,7 @@ namespace Tider.Controllers
             return View(category);
         }
 
-        // GET: Articles/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return HttpNotFound();
-            }
-            return View(category);
-        }
-
-        // POST: Articles/Delete/5
+        // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

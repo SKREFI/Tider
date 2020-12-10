@@ -1,0 +1,44 @@
+﻿@model Tider.Models.Post
+
+
+
+
+
+
+<div class="post">
+    <div class="post-main-left">
+        <img src="https://i.imgur.com/AYi3qCc.png"/>
+    </div>
+
+    <div class="post-main-right">
+        <div class="post-header">
+            <div class="post-header-left">
+                <p>@Html.DisplayFor(model => model.Op.Nickname) | </p>
+                <p>@Html.DisplayFor(model => model.Date)</p>
+            </div>
+
+            <div class="post-header-right">
+                <img src="~/Content/src/my_like_v3.png" />
+                <p>12</p>
+                <img src="~/Content/src/my_dislike_v3.png" />
+            </div>
+
+        </div>
+
+        <div class="post-content">
+            @{ 
+                if (Model.Image_url != null) {
+                    <img src="@Model.Image_url" alt="post's image"/>
+                }
+            }
+        <p>@Html.DisplayFor(model => model.Content) Proin eget tortor dui. Phasellus varius accumsan mi, quis convallis ex ultricies sit amet. Etiam dui nunc, luctus in tincidunt nec, pretium quis ipsum. Aliquam a mauris scelerisque, mollis dolor eget, vestibulum nisl. Quisque rhoncus leo ut tortor tincidunt, quis sodales elit volutpat. Sed venenatis eu erat eu eleifend. Nam id ante consequat, sollicitudin nisl nec, tincidunt dui. Mauris congue sagittis orci, quis imperdiet risus pharetra a. Integer sed ultricies nisi.
+            </p>
+        </div>
+
+        <div class="post-footer">
+            <span class="badge badge-warning"> @Html.ActionLink("Edit", "Edit", new { id = Model.ID })</span>
+            <span class="badge badge-danger">@Html.ActionLink("Delete", "Delete", new { id = Model.ID })</span>
+            <span class="badge badge-info">@Html.ActionLink("Details", "Details", new { id = Model.ID })</span>
+        </div>
+    </div>
+</div>
