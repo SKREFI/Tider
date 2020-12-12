@@ -1,0 +1,36 @@
+﻿@model Tider.Models.ApplicationUser
+
+<tr>
+    <th scope="row">
+        <div class="media align-items-center">
+            <a href="/ApplicationUsers/ProfilePage/@Model.Id" class="avatar rounded-circle mr-3">
+                <img alt="Image placeholder" src="@Model.Image_url">
+            </a>
+            <div class="media-body">
+                <span class="mb-0 text-sm">@Model.Email</span>
+            </div>
+        </div>
+    </th>
+    <td>
+        @Model.Nickname
+    </td>
+    <td>
+        ==ROLE==
+    </td>
+    <td>
+        @Model.UserName
+    </td>
+    <td>
+    </td>
+    <td class="text-right">
+        <div class="dropdown">
+            <a class="btn btn-sm btn-icon-only text-light" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="small-icon" src="~/Content/src/three_dots.svg" />
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="background-color: #17355B;">
+                <a class="dropdown-item" href="#">Make moderator</a>
+                <a class="dropdown-item" href="#">Make admin</a>
+            </div>
+        </div>
+    </td>
+</tr>

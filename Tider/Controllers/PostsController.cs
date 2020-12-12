@@ -25,9 +25,9 @@ namespace Tider.Controllers
                 return View(new List<Post>());
             }
 
-
-            var posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId);
-            return View(posts.ToList());
+            ViewBag.UserImage = db.Users.Find(User.Identity.GetUserId()).Image_url;
+            var posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId).ToList();
+            return View(posts);
         }
 
         // POST: Posts/Create
@@ -37,19 +37,15 @@ namespace Tider.Controllers
             post.OpId = User.Identity.GetUserId();
             post.Date = DateTime.Now;
 
-            if (TempData.ContainsKey("categoryId")) {
-                post.CategoryId = (int)TempData["categoryId"];
-            } else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (TempData.ContainsKey("categoryId")) post.CategoryId = (int)TempData["categoryId"];
+            else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             if (ModelState.IsValid) {
                 db.Posts.Add(post);
                 db.SaveChanges();
-                //return RedirectToAction("Index");
-                return Redirect("/Posts/Index/?categoryId=" + post.CategoryId);
+                return Redirect(Request.UrlReferrer.ToString());
             }
 
-            //ViewBag.CategoryId = new SelectList(db.Categories, "ID", "Title", post.CategoryId);
-            //ViewBag.OpId = new SelectList(db.ApplicationUsers, "Id", "Nickname", post.OpId);
             return View(post);
         }
 
@@ -69,9 +65,8 @@ namespace Tider.Controllers
             if (ModelState.IsValid) {
                 db.Entry(post).State = EntityState.Modified;
                 db.SaveChanges();
-                return Redirect("/Posts/Index/?categoryId=" + post.CategoryId);
+                return Redirect(Request.UrlReferrer.ToString());
             }
-
             return View(post);
         }
 
@@ -88,7 +83,7 @@ namespace Tider.Controllers
                 categoryId = (int) TempData["categoryId"];
             } else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            return Redirect("/Posts/Index/?categoryId=" + categoryId);
+            return Redirect(Request.UrlReferrer.ToString());
         }
 
         protected override void Dispose(bool disposing) {

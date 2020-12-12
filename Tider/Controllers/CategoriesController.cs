@@ -18,6 +18,8 @@ namespace Tider.Controllers
 
         // GET: Categories
         public ActionResult Index() {
+            ViewBag.userImage = db.Users.Find(User.Identity.GetUserId()).Image_url;
+
             return View(db.Categories.ToList());
         }
 
@@ -34,16 +36,13 @@ namespace Tider.Controllers
         }
 
         // POST: Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Description,Image_url")] Category category)
-        {
+        public ActionResult Create([Bind(Include = "Title,Description,Image_url")] Category category) {
             category.OpId = User.Identity.GetUserId();
             category.Date = DateTime.Now;
 
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Categories.Add(category);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -53,18 +52,13 @@ namespace Tider.Controllers
         }
 
         // POST: Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Title,Description,Image_url")] Category category)
-        {
+        public ActionResult Edit([Bind(Include = "ID,Title,Description,Image_url")] Category category) {
             category.OpId = User.Identity.GetUserId();
             category.Date = DateTime.Now;
 
-            //TODO: Ask for help, after editing, the image went puf
-
-            if (ModelState.IsValid)
-            {
+            if (ModelState.IsValid) {
                 db.Entry(category).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -75,20 +69,15 @@ namespace Tider.Controllers
         // POST: Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
+        public ActionResult DeleteConfirmed(int id) {
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
+        protected override void Dispose(bool disposing) {
+            if (disposing) db.Dispose();
             base.Dispose(disposing);
         }
     }

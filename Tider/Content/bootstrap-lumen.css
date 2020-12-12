@@ -42,6 +42,11 @@
     --breakpoint-xl: 1200px;
     --font-family-sans-serif: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    
+    
+    --dark: #132C4C;
+    --mid: #17355B;
+    --light: #457EB9;
 }
 
 *,
@@ -2189,6 +2194,7 @@ pre {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
     .table-responsive > .table-bordered {
@@ -2830,9 +2836,9 @@ fieldset:disabled a.btn {
     }
 
     .btn-success:focus, .btn-success.focus {
-        color: #fff;
+        /*color: #fff;
         background-color: #219724;
-        border-color: #1f8c22;
+        border-color: #1f8c22;*/
         box-shadow: 0 0 0 0.2rem rgba(72, 193, 76, 0.5);
     }
 
@@ -2844,9 +2850,9 @@ fieldset:disabled a.btn {
 
     .btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
     .show > .btn-success.dropdown-toggle {
-        color: #fff;
+        /*color: #fff;
         background-color: #1f8c22;
-        border-color: #1d821f;
+        border-color: #1d821f;*/
     }
 
         .btn-success:not(:disabled):not(.disabled):active:focus, .btn-success:not(:disabled):not(.disabled).active:focus,
@@ -3574,7 +3580,7 @@ input[type="button"].btn-block {
     height: 0;
     margin: 0.5rem 0;
     overflow: hidden;
-    border-top: 1px solid #f0f0f0;
+    border-top: 1px solid var(--light);
 }
 
 .dropdown-item {
@@ -3591,9 +3597,9 @@ input[type="button"].btn-block {
 }
 
     .dropdown-item:hover, .dropdown-item:focus {
-        color: #151515;
         text-decoration: none;
-        background-color: #f6f6f6;
+        /*color: #151515;*/
+        /*background-color: #f6f6f6;*/
     }
 
     .dropdown-item.active, .dropdown-item:active {
@@ -4900,6 +4906,7 @@ input[type="button"].btn-block {
 .navbar-dark .navbar-brand {
     color: #fff;
     color: #380535;
+    color: var(--light)
 }
 
     .navbar-dark .navbar-brand:hover, .navbar-dark .navbar-brand:focus {
@@ -7051,7 +7058,7 @@ button.bg-light:focus {
 }
 
 .bg-dark {
-    background-color: #555 !important;
+    background-color: var(--dark) !important;
 }
 
 a.bg-dark:hover, a.bg-dark:focus,
@@ -8680,6 +8687,7 @@ button.bg-dark:focus {
 .mt-4,
 .my-4 {
     margin-top: 1.5rem !important;
+    border-color: var(--light);
 }
 
 .mr-4,
@@ -10887,6 +10895,10 @@ button.bg-dark:focus {
     color: #fff !important;
 }
 
+.text-black {
+    color: #000 !important;
+}
+
 .text-primary {
     color: #158cba !important;
 }
@@ -11104,7 +11116,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .bg-dark {
-    border-color: #484848;
+    border-color: var(--light);
 }
 
 .bg-light {
