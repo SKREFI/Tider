@@ -12,10 +12,17 @@
         </div>
     </th>
     <td>
-        @Model.Nickname
+        @Model.UserName
     </td>
     <td>
-        ==ROLE==
+        @if (Model.Roles.Count() == 3) {
+            <a class="badge badge-danger text-white">Admin</a>
+        } else if (Model.Roles.Count() == 2) {
+            <a class="badge badge-warning text-white">Moderator</a>
+
+        } else {
+            <a class="badge badge-secondary text-black">User</a>
+        }
     </td>
     <td>
         @Model.UserName
@@ -28,9 +35,22 @@
                 <img class="small-icon" src="~/Content/src/three_dots.svg" />
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="background-color: #17355B;">
-                <a class="dropdown-item" href="#">Make moderator</a>
-                <a class="dropdown-item" href="#">Make admin</a>
+                <a class="dropdown-item" href="/ApplicationUsers/ProfilePage/@Model.Id">View Profile</a>
+                @if (User.IsInRole("Admin")) {
+                    if (Model.Roles.Count() == 3) {
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=Moderator&userId=@Model.Id">Make moderator</a>
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=User&userId=@Model.Id">Make user</a>
+                    } else if (Model.Roles.Count() == 2) {
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=Admin&userId=@Model.Id">Make admin</a>
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=User&userId=@Model.Id">Make user</a>
+                    } else {
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=Admin&userId=@Model.Id">Make admin</a>
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=Moderator&userId=@Model.Id">Make moderator</a>
+                    }
+                }
+
             </div>
         </div>
     </td>
 </tr>
+

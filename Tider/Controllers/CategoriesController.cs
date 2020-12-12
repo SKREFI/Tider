@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Tider.Models;
 
@@ -15,10 +11,12 @@ namespace Tider.Controllers
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext db = new ApplicationDbContext();
+        //readonly UserManager<ApplicationUser> UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
 
         // GET: Categories
         public ActionResult Index() {
-            ViewBag.userImage = db.Users.Find(User.Identity.GetUserId()).Image_url;
+            ViewBag.userImage = User.Identity.IsAuthenticated ? db.Users.Find(User.Identity.GetUserId()).Image_url : null;
+            ViewBag.isAdmin = User.IsInRole(Const.ADMIN);
 
             return View(db.Categories.ToList());
         }
@@ -36,6 +34,7 @@ namespace Tider.Controllers
         }
 
         // POST: Categories/Create
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Title,Description,Image_url")] Category category) {
@@ -52,6 +51,7 @@ namespace Tider.Controllers
         }
 
         // POST: Categories/Edit/5
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Title,Description,Image_url")] Category category) {
@@ -67,6 +67,7 @@ namespace Tider.Controllers
         }
 
         // POST: Categories/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) {

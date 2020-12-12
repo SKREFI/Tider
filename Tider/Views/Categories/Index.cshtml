@@ -5,32 +5,30 @@
 }
 
 
-<div class="add-category">
-    @if (ViewBag.userImage != null) {
+@if (ViewBag.isAdmin) {
+    <div class="add-category">
         <img id="profile-image" src="@ViewBag.userImage" />
-    } else {
-        <img id="profile-image" src="https://images.theconversation.com/files/350865/original/file-20200803-24-50u91u.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=1200&h=1200.0&fit=crop" />
-    }
 
-    <div class="add-category-main">
-        <form method="post" action="/Categories/Create">
-            @Html.AntiForgeryToken()
-            <div class="form-group">
-                <input class="transparent-form" name="Title" placeholder="Title" />
-            </div>
+        <div class="add-category-main">
+            <form class="mt-2" method="post" action="/Categories/Create">
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <input class="transparent-form" name="Title" placeholder="Title" />
+                </div>
 
-            <div class="form-group">
-                <input style="width: 97%;" class="transparent-form" name="Description" placeholder="Description" />
-            </div>
+                <div class="form-group">
+                    <input style="width: 97%;" class="transparent-form" name="Description" placeholder="Description" />
+                </div>
 
-            <div class="form-group">
-                <input class="transparent-form" name="Image_url" placeholder="Image URL" />
-            </div>
+                <div class="form-group">
+                    <input class="transparent-form" name="Image_url" placeholder="Image URL" />
+                </div>
 
-            <button style="" class="btn btn-success" type="submit">Add category</button>
-        </form>
+                <button style="" class="btn btn-success" type="submit">Add category</button>
+            </form>
+        </div>
     </div>
-</div>
+}
 
 @foreach (var item in Model) {
     @Html.Partial("Partials/_Category", item)

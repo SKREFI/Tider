@@ -13,24 +13,35 @@ namespace Tider.Controllers
 {
     public class PostsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Posts
         public ActionResult Index(int? categoryId) {
             TempData["categoryId"] = categoryId;
-            ViewBag.categoryId = categoryId;
 
             if (categoryId == null) {
                 ViewBag.Title = "Hot Page - Not done yet";
                 return View(new List<Post>());
             }
 
-            ViewBag.UserImage = db.Users.Find(User.Identity.GetUserId()).Image_url;
-            var posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId).ToList();
-            return View(posts);
+            PostsViewModel postsViewModel = new PostsViewModel {
+                UserImage = User.Identity.IsAuthenticated ? db.Users.Find(User.Identity.GetUserId()).Image_url : null,
+                IsAdmin = User.IsInRole(Const.ADMIN),
+                IsMod = User.IsInRole(Const.MODERATOR),
+                IsUser = User.Identity.IsAuthenticated,
+                CategoryID = categoryId,
+                Posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId).ToList()
+            };
+            //TODO: ask how do I deal with partials and ViewModels data aka without using ViewBag
+            ViewBag.IsAdmin = User.IsInRole(Const.ADMIN);
+            ViewBag.IsMod = User.IsInRole(Const.MODERATOR);
+            ViewBag.UserID = User.Identity.GetUserId();
+
+            return View(postsViewModel);
         }
 
         // POST: Posts/Create
+        //[Authorize(Roles = "Admin, Moderator, User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Content,Image_url")] Post post) {
@@ -50,6 +61,7 @@ namespace Tider.Controllers
         }
 
         // POST: Posts/Edit/5
+        //[Authorize(Roles = "Admin, Moderator, User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Content,Image_url")] Post post) {
@@ -71,6 +83,7 @@ namespace Tider.Controllers
         }
 
         // POST: Posts/Delete/5
+        //[Authorize(Roles = "Admin, Moderator, User")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) {
@@ -78,10 +91,10 @@ namespace Tider.Controllers
             db.Posts.Remove(post);
             db.SaveChanges();
 
-            int categoryId;
-            if (TempData.ContainsKey("categoryId")) {
-                categoryId = (int) TempData["categoryId"];
-            } else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //int categoryId;
+            //if (TempData.ContainsKey("categoryId")) {
+            //    categoryId = (int) TempData["categoryId"];
+            //} else return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             return Redirect(Request.UrlReferrer.ToString());
         }

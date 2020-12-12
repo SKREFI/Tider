@@ -64,7 +64,8 @@ namespace Tider
             //    ClientSecret = ""
             //});
 
-
+            // Adding those myself for roles
+            app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);
         }
     }
 }

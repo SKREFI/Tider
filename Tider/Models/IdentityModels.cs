@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Tider.Models {
     public class ApplicationUser : IdentityUser {
-        public string Nickname { get; set; }
+        public string RealName { get; set; }
         public string Image_url { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
@@ -35,5 +35,6 @@ namespace Tider.Models {
 
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
+        public virtual DbSet<IdentityUserRole> UserRoles { get; set; }
     }
 }

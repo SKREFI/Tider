@@ -14,6 +14,16 @@ using Tider.Models;
 
 namespace Tider
 {
+    public class ApplicationRoleManager : RoleManager<IdentityRole> {
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> store) : base(store) { }
+
+        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context) {
+            var roleStore = new RoleStore<IdentityRole>(context.Get<ApplicationDbContext>());
+            return new ApplicationRoleManager(roleStore);
+        }
+    }
+
+    
     public class EmailService : IIdentityMessageService
     {
         public Task SendAsync(IdentityMessage message)

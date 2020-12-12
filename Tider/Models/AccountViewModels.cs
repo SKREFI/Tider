@@ -64,7 +64,8 @@ namespace Tider.Models
 
     public class RegisterViewModel
     {
-        public string Nickname { get; set; }
+        [Required]
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

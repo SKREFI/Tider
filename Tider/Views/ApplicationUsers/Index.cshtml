@@ -18,9 +18,9 @@
                             <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">User</th>
-                                    <th scope="col">Nickname</th>
-                                    <th scope="col">Role</th>
                                     <th scope="col">Username</th>
+                                    <th scope="col">Role</th>
+                                    <th scope="col">Real name</th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
                                 </tr>
@@ -36,13 +36,47 @@
             </div>
         </div>
     </div>
-</div>   
+</div>
+
+
+<form id="editRoles" style="visibility: hidden" method="post" action="to_be_replaced">@Html.AntiForgeryToken()</form>
 
 
 @section styles {
     <link rel="stylesheet" href="~/Content/users-table.css" />
 
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+}
+
+
+@section scripts {
+    <script>
+
+        $('a.edit-roles').click(function () {
+            $('#editRoles').get(0).setAttribute('action', ($(this).attr('data-link')))
+            $('#editRoles').get(0).submit()
+
+        });
+
+
+        //$(function () {
+        //    $(".dropdown-item.editRole").on("click", function (event) {
+        //        event.preventDefault();
+
+        //        var button = $(event.relatedTarget)
+                
+        //        var link = button.data('link')
+                
+        //        console.log(button)
+
+
+
+        //        //$.post(this.href, function (data) {
+        //        //    //console.log(data);
+        //        //})
+        //    })
+        //})
+    </script>
 }
 
 

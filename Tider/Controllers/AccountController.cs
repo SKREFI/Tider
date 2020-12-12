@@ -136,11 +136,19 @@ namespace Tider.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (model.Nickname == null) model.Nickname = "NickEman";
-                var user = new ApplicationUser { Nickname = model.Nickname, UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {
+                    UserName = model.UserName,
+                    RealName = "A Nobody",
+                    Email = model.Email,
+                    // Giving the user a default picture
+                    Image_url = Const.DEFAULT_USER_IMAGE
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    // Giving the new user the USER role
+                    UserManager.AddToRole(user.Id, Const.USER);
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
