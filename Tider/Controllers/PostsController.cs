@@ -19,10 +19,9 @@ namespace Tider.Controllers
         public ActionResult Index(int? categoryId) {
             TempData["categoryId"] = categoryId;
 
-            if (categoryId == null) {
-                ViewBag.Title = "Hot Page - Not done yet";
-                return View(new List<Post>());
-            }
+            List<Post> posts = new List<Post>();
+            if (categoryId != null) posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId).ToList();
+            //else TODO: Implement hot page based on likes/views
 
             PostsViewModel postsViewModel = new PostsViewModel {
                 UserImage = User.Identity.IsAuthenticated ? db.Users.Find(User.Identity.GetUserId()).Image_url : null,
@@ -30,8 +29,9 @@ namespace Tider.Controllers
                 IsMod = User.IsInRole(Const.MODERATOR),
                 IsUser = User.Identity.IsAuthenticated,
                 CategoryID = categoryId,
-                Posts = db.Posts.Include(p => p.Category).Include(p => p.Op).Where(p => p.CategoryId == categoryId).ToList()
+                Posts = posts
             };
+
             //TODO: ask how do I deal with partials and ViewModels data aka without using ViewBag
             ViewBag.IsAdmin = User.IsInRole(Const.ADMIN);
             ViewBag.IsMod = User.IsInRole(Const.MODERATOR);

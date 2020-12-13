@@ -144,3 +144,4 @@ C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.csprojAssemblyReference
 C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.Migrations.InitialCreate.resources
 C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.csproj.GenerateResource.cache
 C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.Migrations.init.resources
+C:\Users\SKREFI\source\repos\Tider\Tider\obj\Debug\Tider.Migrations.migration10.resources

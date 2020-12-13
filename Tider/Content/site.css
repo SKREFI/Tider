@@ -141,10 +141,13 @@ a:link, a:visited, a:hover, a:active {
     width: 100%;
     min-height: 100px;
     background-color: #b3cdd1;
+    background-color: var(--mid);
+    background-color: var(--dark);
 }
 
     .category:hover {
-        background-image: linear-gradient(145deg, #b3cdd1 0%, #9fa4c4 99%);
+        /*background-image: linear-gradient(145deg, #b3cdd1 0%, #9fa4c4 99%);*/
+        background-color: var(--mid);
     }
 
 #category-image {
@@ -159,6 +162,7 @@ a:link, a:visited, a:hover, a:active {
     white-space: nowrap;
     height: 33%;
     width: 100%;
+
 }
 
 .category-main {
@@ -198,9 +202,13 @@ a:link, a:visited, a:hover, a:active {
     width: 100%;
     display: flex;
     background-color: #111B22;
-    background-color: var(--mid);
+    background-color: var(--dark);
     border-radius: 10px;
-}
+}   
+    
+    .post:hover {
+        background-color: var(--mid);
+    }
 
     .post .post-main-left {
         width: 10%;
@@ -377,6 +385,26 @@ a:link, a:visited, a:hover, a:active {
 
 /* SOME MORE RANDOM */
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--dark);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--light);
+    border-radius: 5px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--mid);
+    }
+
 a {
     text-decoration: none;
     color: #5e72e4;
@@ -386,7 +414,7 @@ a {
 
     a:hover {
         text-decoration: none;
-        color: #233dd2;
+        /*color: #233dd2;*/
     }
 
     a:not([href]):not([tabindex]) {
@@ -403,3 +431,4 @@ a {
         a:not([href]):not([tabindex]):focus {
             outline: 0;
         }
+

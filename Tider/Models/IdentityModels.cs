@@ -22,7 +22,9 @@ namespace Tider.Models {
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser> {
-        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) { }
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false) {
+            Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             base.OnModelCreating(modelBuilder);
