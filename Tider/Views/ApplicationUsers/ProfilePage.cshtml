@@ -1,7 +1,7 @@
 ﻿@model Tider.Models.ProfilePageViewModel
 
 @{
-    ViewBag.Title = Model.User.UserName +  " - Profile";
+    ViewBag.Title = Model.User.NickName +  " - Profile";
 }
 
 @section styles {
@@ -55,7 +55,7 @@
                                 } else if (Model.User.Roles.Count == 2) {
                                     <span class="badge badge-warning text-white">Moderator</span>
                                 }
-                                @Model.User.UserName<span class="font-weight-light">, 20</span>
+                                @Model.User.RealName<span class="font-weight-light">, 20</span>
                             </h3>
                             <div id="profile-description">
                                 Description
@@ -73,7 +73,7 @@
                                 <h3 class="mb-0 text-white">My account</h3>
                             </div>
                             <div class="col-4 text-right">
-                                <a style="color: #fff;" href="#!" class="btn btn-sm btn-primary">Edit profile</a>
+                                <span data-category-id=@Model.User.Id data-toggle="modal" data-target="#editProfile" class="btn btn-sm btn-primary" style="cursor:pointer;">Edit profile</span>
                             </div>
                         </div>
                     </div>
@@ -83,8 +83,8 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-group focused">
-                                            <label class="form-control-label text-white" for="input-username">Username</label>
-                                            <input type="text" class="form-control form-control-alternative text-black" placeholder="Username" value="@Model.User.UserName" disabled>
+                                            <label class="form-control-label text-white" for="input-username">Nickname</label>
+                                            <input type="text" class="form-control form-control-alternative text-black" placeholder="Not Set" value="@Model.User.NickName" disabled>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -127,6 +127,43 @@
                             </div>
                         </form>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark">
+            <div class="modal-header">
+                <h5 class="modal-title text-white">Edit post...</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" class="text-white">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="add-category-main text-white">
+                    <form method="post" action="/ApplicationUsers/Edit/@Model.User.Id" >
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <input class="transparent-form" name="NickName" placeholder="Nick name" />
+                        </div>
+
+                        <div class="form-group">
+                            <input class="transparent-form" name="RealName" placeholder="Real name" />
+                        </div>
+
+                        <div class="form-group">
+                            <input style="width: 97%;" class="transparent-form" name="Image_url" placeholder="Image URL" />
+                        </div>
+
+                        <button type="button" class="btn bg-dark" data-dismiss="modal">Close</button>
+                        <button style="" class="btn bg-dark" type="submit">Edit profile</button>
+
+                    </form>
                 </div>
             </div>
         </div>

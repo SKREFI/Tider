@@ -10,9 +10,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace Tider.Models {
     public class ApplicationUser : IdentityUser {
         public string RealName { get; set; }
+        public string NickName { get; set; }
         public string Image_url { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
+
         //public virtual ICollection<Category> Subscriptions { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager) {

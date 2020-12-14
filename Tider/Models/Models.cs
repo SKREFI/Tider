@@ -17,24 +17,19 @@ namespace Tider.Models
         public string OpId { get; set; }                     // LINKED - Op
         public virtual ApplicationUser Op { get; set; }      // LINKED - Op
         public virtual ICollection<Post> Posts { get; set; }
-
         //public virtual ICollection<ApplicationUser> Subscribers { get; set; }
     }
-
 
     public class Post {
         public int ID { get; set; }
         public string Content { get; set; }
         public string Image_url { get; set; }
         public DateTime Date { get; set; }
-        public int CategoryId { get; set; }          // LINKED - Category
+        public int CategoryId { get; set; }             // LINKED - Category
         public virtual Category Category { get; set; }  // LINKED - Category
         public string OpId { get; set; }                // LINKED - Op
         public virtual ApplicationUser Op { get; set; } // LINKED - Op
     }
-
-
-
 
     //public class Comment
     //{
@@ -54,18 +49,5 @@ namespace Tider.Models
     //    public DateTime Date { get; set; }
     //    //public int Post_id { get; set; } // Post connection
     //    public virtual Post Post { get; set; }
-    //}
-
-    //public class Post
-    //{
-    //    public int ID { get; set; }
-    //    public int Op_id { get; set; } // User connection
-    //    public string Title { get; set; } 
-    //    public string Content { get; set; }
-    //    public string Image_url { get; set; }
-    //    public DateTime Date { get; set; }
-    //    public virtual Category Category { get; set; } // Category ->>> Post
-    //    public virtual ICollection<Comment> Comments { get; set; } // Comment -> Post
-    //    public virtual ICollection<View> Views { get; set; } // View ->>> Post
     //}
 }

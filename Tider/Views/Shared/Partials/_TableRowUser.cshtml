@@ -12,7 +12,7 @@
         </div>
     </th>
     <td>
-        @Model.UserName
+        @Model.NickName
     </td>
     <td>
         @if (Model.Roles.Count() == 3) {
@@ -25,7 +25,7 @@
         }
     </td>
     <td>
-        @Model.UserName
+        @Model.RealName
     </td>
     <td>
     </td>
@@ -37,6 +37,7 @@
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow" style="background-color: #17355B;">
                 <a class="dropdown-item" href="/ApplicationUsers/ProfilePage/@Model.Id">View Profile</a>
                 @if (User.IsInRole("Admin")) {
+                        <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/Delete/@Model.Id">Delete User</a>
                     if (Model.Roles.Count() == 3) {
                         <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=Moderator&userId=@Model.Id">Make moderator</a>
                         <a href="#" class="dropdown-item edit-roles" data-link="/ApplicationUsers/EditRole/?role=User&userId=@Model.Id">Make user</a>

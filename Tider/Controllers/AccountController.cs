@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -47,7 +48,12 @@ namespace Tider.Controllers
         public ActionResult Login(string returnUrl) {
             
             ViewBag.ReturnUrl = returnUrl;
-            return View();
+
+            LoginViewModel model = new LoginViewModel {
+                EmailPlaceholder = "Email",
+                PasswordPlaceholder = "Password"
+            };
+            return View(model);
         }
 
         //
@@ -60,9 +66,14 @@ namespace Tider.Controllers
                 return View(model);
             }
 
+            //Debug.WriteLine("Login Email: |" + model.Email + "|");
+            //Debug.WriteLine("Login Password: |" + model.Password + "|");
+            //Debug.WriteLine("Login RememberMe: |" + model.RememberMe + "|");
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
             switch (result)
             {
                 case SignInStatus.Success:
@@ -73,7 +84,15 @@ namespace Tider.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    model.EmailPlaceholder = "Email";
+                    model.PasswordPlaceholder = "Password";
+                    model.InvalidLogin = true;
+
+                    // TODO: Fix This appearing in GET
+                    ModelState.AddModelError("Mail", "Invalid email.");
+                    if  (model.Password == String.Empty) 
+                    ModelState.AddModelError("", "Invalid login.");
+
                     return View(model);
             }
         }
@@ -137,18 +156,22 @@ namespace Tider.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser {
-                    UserName = model.UserName,
+                    UserName = model.Email,
                     RealName = "A Nobody",
+                    NickName = model.NickName ?? "NotSet",
                     Email = model.Email,
                     // Giving the user a default picture
                     Image_url = Const.DEFAULT_USER_IMAGE
                 };
                 var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
+
+                //Debug.WriteLine("Register Email: |" + model.Email + "|");
+                //Debug.WriteLine("Register Password: |" + model.Password + "|");
+
+                if (result.Succeeded) {
                     // Giving the new user the USER role
                     UserManager.AddToRole(user.Id, Const.USER);
-
+                    
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -159,6 +182,14 @@ namespace Tider.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+
+                Debug.WriteLine("Errors: ");
+                foreach (var item in result.Errors.ToList()) {
+                    Debug.WriteLine("Name?:" + item.Contains("Name") + " || String: " + item);
+                    Debug.WriteLine("Mail?:" + item.Contains("Mail") + " || String: " + item);
+                    Debug.WriteLine("Password?:" + item.Contains("Password") + " || String: " + item);
+                }
+
                 AddErrors(result);
             }
 

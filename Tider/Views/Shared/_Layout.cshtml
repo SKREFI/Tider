@@ -33,6 +33,7 @@
                             @Html.AntiForgeryToken()
 
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @*TODO: Replace with NickName instead of UserName*@
                                 @User.Identity.GetUserName()
                             </a>
                             <div class="dropdown-menu bg-dark" aria-labelledby="navbarDropdown">

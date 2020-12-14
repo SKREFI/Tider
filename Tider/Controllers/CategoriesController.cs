@@ -74,7 +74,7 @@ namespace Tider.Controllers
             Category category = db.Categories.Find(id);
             db.Categories.Remove(category);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction(Request.UrlReferrer.ToString());
         }
 
         protected override void Dispose(bool disposing) {
