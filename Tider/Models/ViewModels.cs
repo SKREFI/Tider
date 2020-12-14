@@ -28,6 +28,17 @@ namespace Tider.Models {
         public int? CategoryID { get; set; }
     }
 
+    public class CommentsViewModel {
+        public bool IsAdmin { get; set; }
+        public bool IsMod { get; set; }
+        public bool IsUser { get; set; }
+        public string UserImage { get; set; }
+        public ICollection<Comment> Comments { get; set; }
+        public Post Post { get; set; }
+        public int CommentsCount { get; set; }
+        public int? PostId { get; set; }
+    }
+
     public class ProfilesTableViewModel {
         public ICollection<Tuple<ApplicationUser, string>> PostRoleTuples { get; set; }
     }

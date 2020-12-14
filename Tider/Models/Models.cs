@@ -25,29 +25,29 @@ namespace Tider.Models
         public string Content { get; set; }
         public string Image_url { get; set; }
         public DateTime Date { get; set; }
-        public int CategoryId { get; set; }             // LINKED - Category
-        public virtual Category Category { get; set; }  // LINKED - Category
-        public string OpId { get; set; }                // LINKED - Op
-        public virtual ApplicationUser Op { get; set; } // LINKED - Op
+        public int CategoryId { get; set; }                 // LINKED - Category
+        public virtual Category Category { get; set; }      // LINKED - Category
+        public string OpId { get; set; }                    // LINKED - Op
+        public virtual ApplicationUser Op { get; set; }     // LINKED - Op
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 
-    //public class Comment
-    //{
-    //    public int ID { get; set; }
-    //    public int Op_id { get; set; } // User connection
-    //    public string Content { get; set; }
-    //    public DateTime Date { get; set; }
-    //    public virtual Post Post { get; set; } // Posts ->>> Comments
-    //}
-
-    // ----------------------------------
+    public class Comment {
+        public int ID { get; set; }
+        public string Content { get; set; }
+        public DateTime Date { get; set; }
+        public string OpId { get; set; }                    // LINKED - Op
+        public virtual ApplicationUser Op { get; set; }     // LINKED - Op
+        public int PostId { get; set; }                     // LINKED - Post
+        public virtual Post Post { get; set; }              // LINKED - Post | Posts ->>> Comments
+    }
 
     //public class View
     //{
     //    public int ID { get; set; }
-    //    public int User_id { get; set; } // User connection, TODO: may be replaced with virtual User
+    //    public int UserId { get; set; } // User connection, TODO: may be replaced with virtual User
     //    public DateTime Date { get; set; }
-    //    //public int Post_id { get; set; } // Post connection
+    //    //public int PostId { get; set; } // Post connection
     //    public virtual Post Post { get; set; }
     //}
 }

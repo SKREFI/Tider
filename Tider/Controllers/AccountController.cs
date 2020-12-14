@@ -89,7 +89,7 @@ namespace Tider.Controllers
                     model.InvalidLogin = true;
 
                     // TODO: Fix This appearing in GET
-                    ModelState.AddModelError("Mail", "Invalid email.");
+                    //ModelState.AddModelError("Mail", "Invalid email.");
                     if  (model.Password == String.Empty) 
                     ModelState.AddModelError("", "Invalid login.");
 
