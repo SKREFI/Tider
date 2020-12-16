@@ -432,9 +432,6 @@
     <Content Include="Views\ApplicationUsers\Index.cshtml" />
     <Content Include="Views\Shared\Partials\_TableRowUser.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Comments\Create.cshtml" />
-    <Content Include="Views\Comments\Delete.cshtml" />
-    <Content Include="Views\Comments\Edit.cshtml" />
     <Content Include="Views\Comments\Index.cshtml" />
     <Content Include="Views\Shared\Partials\_Comment.cshtml" />
   </ItemGroup>

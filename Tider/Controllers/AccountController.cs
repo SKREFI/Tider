@@ -56,7 +56,6 @@ namespace Tider.Controllers
             return View(model);
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -65,10 +64,6 @@ namespace Tider.Controllers
             if (!ModelState.IsValid) {
                 return View(model);
             }
-
-            //Debug.WriteLine("Login Email: |" + model.Email + "|");
-            //Debug.WriteLine("Login Password: |" + model.Password + "|");
-            //Debug.WriteLine("Login RememberMe: |" + model.RememberMe + "|");
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
@@ -88,16 +83,14 @@ namespace Tider.Controllers
                     model.PasswordPlaceholder = "Password";
                     model.InvalidLogin = true;
 
-                    // TODO: Fix This appearing in GET
-                    //ModelState.AddModelError("Mail", "Invalid email.");
+                    ModelState.AddModelError("Mail", "Invalid email.");
                     if  (model.Password == String.Empty) 
-                    ModelState.AddModelError("", "Invalid login.");
+                        ModelState.AddModelError("", "Invalid login.");
 
                     return View(model);
             }
         }
 
-        //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
         public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
@@ -182,14 +175,6 @@ namespace Tider.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
-
-                Debug.WriteLine("Errors: ");
-                foreach (var item in result.Errors.ToList()) {
-                    Debug.WriteLine("Name?:" + item.Contains("Name") + " || String: " + item);
-                    Debug.WriteLine("Mail?:" + item.Contains("Mail") + " || String: " + item);
-                    Debug.WriteLine("Password?:" + item.Contains("Password") + " || String: " + item);
-                }
-
                 AddErrors(result);
             }
 
@@ -428,18 +413,14 @@ namespace Tider.Controllers
             return View();
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
+        protected override void Dispose(bool disposing) {
+            if (disposing) {
+                if (_userManager != null) {
                     _userManager.Dispose();
                     _userManager = null;
                 }
 
-                if (_signInManager != null)
-                {
+                if (_signInManager != null) {
                     _signInManager.Dispose();
                     _signInManager = null;
                 }
@@ -452,18 +433,14 @@ namespace Tider.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
+        private IAuthenticationManager AuthenticationManager {
+            get {
                 return HttpContext.GetOwinContext().Authentication;
             }
         }
 
-        private void AddErrors(IdentityResult result)
-        {
-            foreach (var error in result.Errors)
-            {
+        private void AddErrors(IdentityResult result) {
+            foreach (var error in result.Errors) {   
                 ModelState.AddModelError("", error);
             }
         }

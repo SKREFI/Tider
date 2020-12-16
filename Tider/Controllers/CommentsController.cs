@@ -43,6 +43,7 @@ namespace Tider.Controllers
         }
 
         // POST: Comments/Create
+        [Authorize(Roles = "Admin,Moderator,User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,Content,Date,OpId,PostId")] Comment comment) {
@@ -65,6 +66,7 @@ namespace Tider.Controllers
         }
 
         // POST: Comments/Edit/5
+        [Authorize(Roles = "Admin,Moderator,User")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ID,Content,Date,OpId,PostId")] Comment comment) {
@@ -89,6 +91,7 @@ namespace Tider.Controllers
 
         // POST: Comments/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin,Moderator,User")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id) {
             Comment comment = db.Comments.Find(id);

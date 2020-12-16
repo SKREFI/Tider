@@ -18,24 +18,23 @@
 
         <div class="form-group">
             @if (Model.InvalidLogin) {
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control align-middle-horizontal my3p10", placeholder = Model.EmailPlaceholder, value = ViewBag.EmailValue })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control align-middle-horizontal my3p10 is-invalid", placeholder = Model.EmailPlaceholder, value = ViewBag.EmailValue })
+                @Html.ValidationMessageFor(m => m.Email, "Wrong email.", new { @class = "text-danger align-middle-horizontal my3p10" })
             } else {
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control align-middle-horizontal my3p10", placeholder = Model.EmailPlaceholder, value = ViewBag.EmailValue })
             }
-            @Html.ValidationMessage("Mail", new { @class = "align-middle-horizontal" })
-
-            @Html.ValidationMessageFor(m => m.Email, "Invalid mail.", new { @class = "text-danger align-middle-horizontal my3p10" })
         </div>
 
 
         <div class="form-group">
             @if (Model.InvalidLogin) {
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control align-middle-horizontal my3p10 is-invalid", placeholder = Model.PasswordPlaceholder })
+                @Html.ValidationMessageFor(m => m.Password, "Or wrong password.", new { @class = "text-danger align-middle-horizontal my3p10" })
             } else {
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control align-middle-horizontal my3p10", placeholder = Model.PasswordPlaceholder })
             }
 
-            @*@Html.ValidationMessageFor(m => m.Password, "Wrong password.", new { @class = "text-danger align-middle-horizontal my3p10" })*@
+
 
         </div>
 
