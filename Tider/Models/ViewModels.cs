@@ -106,7 +106,6 @@ namespace Tider.Models {
     public class RegisterViewModel {
         [Required]
         public string NickName { get; set; }
-
         public bool IsOkNickName { get; set; }
         public bool IsOkEmail { get; set; }
         public bool IsOkPassword { get; set; }

@@ -32,7 +32,7 @@ namespace Tider.Controllers
             return Redirect("Index");
         }
 
-        // GET: ApplicationUsers/ProfilePage/5
+        // GET: ApplicationUsers/ProfilePage/UserID
         public ActionResult ProfilePage(string id) {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
@@ -40,6 +40,7 @@ namespace Tider.Controllers
                 User = db.Users.Find(id),
                 Posts = db.Posts.Where(p => p.OpId == id).ToList(),
             };
+
             viewModel.PostsCount = viewModel.Posts.Count();
 
             if (viewModel.User == null) return HttpNotFound();
@@ -56,6 +57,7 @@ namespace Tider.Controllers
             return View(viewModel);
         }
 
+
         //POST: /ApplicationUsers/EditRole/?role=User&userId=@Model.Id
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -65,17 +67,10 @@ namespace Tider.Controllers
             string role = Request.QueryString["role"];
             string userId = Request.QueryString["userId"];
 
-            Debug.WriteLine(role);
-            Debug.WriteLine(userId);
-
-
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-
-            //UserManager.RemoveFromRoles(userId, new string[] { Const.ADMIN, Const.MODERATOR });
 
             UserManager.RemoveFromRole(userId, Const.ADMIN);
             UserManager.RemoveFromRole(userId, Const.MODERATOR);
-
 
             if (role == Const.ADMIN) UserManager.AddToRoles(userId, new string[] { Const.ADMIN, Const.MODERATOR });
             else if (role == Const.MODERATOR) UserManager.AddToRole(userId, Const.MODERATOR);
